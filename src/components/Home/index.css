@@ -1,0 +1,42 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cardInitial {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
+  background-size: cover;
+}
+.sec {
+  width: 100%;
+}
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: left;
+}
+.SecondCon {
+  display: flex;
+}
+.asideView {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 15%;
+}
+.orderList {
+  display: flex;
+  list-style-type: none;
+  max-height: 800px;
+  max-width: 100%;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  width: 100%;
+  order: 2px solid red;
+  padding: 10px;
+}

@@ -1,0 +1,22 @@
+.cardView {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 3px;
+  border: 1px solid gray;
+  width: 250px;
+}
+
+.linkClass {
+  text-decoration: none;
+  list-style-type: none;
+  color: none;
+}
+.myImage {
+  height: 100px;
+  width: 249px;
+}
+
+.myHeading {
+  font-size: 10px;
+}

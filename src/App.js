@@ -4,7 +4,6 @@ import MainContainer from './context/MainContainer'
 import Login from './components/Login/index'
 import Home from './components/Home/index'
 import './App.css'
-import Header from './components/Header'
 
 class App extends Component {
   state = {backGroundColor: false}
@@ -26,7 +25,6 @@ class App extends Component {
         }}
       >
         <BrowserRouter>
-          <Header />
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/" component={Home} />

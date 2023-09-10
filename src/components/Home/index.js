@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {AiOutlineSearch} from 'react-icons/ai'
 import Card from '../Card/index'
+import SideView from '../SideView'
+import Header from '../Header'
 import './index.css'
 
 class Home extends Component {
@@ -52,41 +54,9 @@ class Home extends Component {
     const {dataArray} = this.state
     return (
       <div className="homeContainer">
+        <Header />
         <div className="SecondCon">
-          <div className="asideView">
-            <ul>
-              <Link to="/">
-                <li>Home</li>
-              </Link>
-              <Link to="/trending">
-                <li>Trending</li>
-              </Link>
-              <Link to="/gaming">
-                <li>Gaming</li>
-              </Link>
-              <Link to="/saved-videos">
-                <li>Saved Videos</li>
-              </Link>
-            </ul>
-            <div className="cardViewAs">
-              <p>CONTACT US</p>
-              <p>Enjoy! Now to see your channels and recommendations!</p>
-              <div>
-                <img
-                  src=" https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-                  alt="facebook logo"
-                />
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-                  alt="twitter logo"
-                />
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                  alt="linked in logo"
-                />
-              </div>
-            </div>
-          </div>
+          <SideView />
           <div className="sec">
             <div className="cardInitial">
               <div>

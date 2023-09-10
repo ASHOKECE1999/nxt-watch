@@ -5,3 +5,9 @@
   justify-content: space-between;
   width: 12%;
 }
+.headerList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

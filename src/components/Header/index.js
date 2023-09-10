@@ -30,19 +30,21 @@ const Header = () => (
 
       return (
         <CusDiv colors={backGroundColor}>
-          <li>
-            <img src={imgUrl} alt="website logo" />
-          </li>
-          <li className="myClass">
-            <button type="button" onClick={changeTheColor}>
-              {buttonTypeUrl}
-            </button>
-            <img
-              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png "
-              alt="profile"
-            />
-            <button type="button">Logout</button>
-          </li>
+          <ul className="headerList">
+            <li>
+              <img src={imgUrl} alt="website logo" />
+            </li>
+            <li className="myClass">
+              <button type="button" onClick={changeTheColor}>
+                {buttonTypeUrl}
+              </button>
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png "
+                alt="profile"
+              />
+              <button type="button">Logout</button>
+            </li>
+          </ul>
         </CusDiv>
       )
     }}

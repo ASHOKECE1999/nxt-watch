@@ -7,11 +7,11 @@ const TrendingCard = props => {
   return (
     <li className="cardView">
       <Link to={`/videos/${id}`} className="linkClass">
-        <img src={thumbnailUrl} alt={title} className="myImage" />
+        <img src={thumbnailUrl} alt="video thumbnail" />
 
         <div style={{display: 'flex'}}>
           <div>
-            <h1 className="myHeading">{title}</h1>
+            <p className="myHeading">{title}</p>
             <p>{viewCount}</p>
           </div>
         </div>

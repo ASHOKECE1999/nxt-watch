@@ -3,7 +3,7 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-duplicates
 import {BsBrightnessHigh} from 'react-icons/bs'
-
+import {Link} from 'react-router-dom'
 import {BsBrightnessHighFill} from 'react-icons/bs'
 
 import './index.css'
@@ -31,9 +31,12 @@ const Header = () => (
       return (
         <CusDiv colors={backGroundColor}>
           <ul className="headerList">
-            <li>
-              <img src={imgUrl} alt="website logo" />
-            </li>
+            <Link to="/">
+              <li>
+                <img src={imgUrl} alt="website logo" />
+              </li>
+            </Link>
+
             <li className="myClass">
               <button type="button" onClick={changeTheColor}>
                 {buttonTypeUrl}

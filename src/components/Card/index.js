@@ -15,18 +15,17 @@ const Card = props => {
   return (
     <li className="cardView">
       <Link to={`/videos/${id}`} className="linkClass">
-        <img src={thumbnailUrl} alt={title} className="myImage" />
+        <img src={thumbnailUrl} alt="video thumbnail" className="myImage" />
 
         <div style={{display: 'flex'}}>
           <div>
             <img src={profileImageUrl} alt={title} />
           </div>
           <div>
-            <h1 className="myHeading">{title}</h1>
+            <p className="myHeading">{title}</p>
             <p>{channelName}</p>
-            <p>
-              {viewCount}:{publishedAt}
-            </p>
+            <p>{viewCount}</p>
+            <p>{publishedAt}</p>
           </div>
         </div>
       </Link>

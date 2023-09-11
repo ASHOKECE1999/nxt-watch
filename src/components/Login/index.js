@@ -2,7 +2,6 @@ import {Redirect} from 'react-router-dom'
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import './index.css'
-import {async} from 'rxjs'
 
 class Login extends Component {
   state = {
@@ -110,7 +109,11 @@ class Login extends Component {
               />
               <label htmlFor="checkBox">Show Password</label>
             </div>
-            <button type="submit" className="muButton">
+            <button
+              type="submit"
+              className="muButton"
+              style={{color: '#ffffff'}}
+            >
               Login
             </button>
           </form>

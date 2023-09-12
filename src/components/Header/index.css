@@ -11,3 +11,14 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.closeBar {
+  background-color: #252424;
+  width: 500px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #f6f1f123;
+}

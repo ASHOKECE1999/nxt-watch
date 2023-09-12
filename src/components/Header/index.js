@@ -3,14 +3,16 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-duplicates
 import {BsBrightnessHigh} from 'react-icons/bs'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {BsBrightnessHighFill} from 'react-icons/bs'
+import Popup from 'reactjs-popup'
+import Cookies from 'js-cookie'
 
 import './index.css'
 import MainContainer from '../../context/MainContainer'
 import CusDiv from './styledComponents'
 
-const Header = () => (
+const Header = props => (
   <MainContainer.Consumer>
     {value => {
       const {backGroundColor, onChangeBackgroundColor} = value
@@ -26,6 +28,12 @@ const Header = () => (
 
       const changeTheColor = () => {
         onChangeBackgroundColor()
+      }
+
+      const logoutFunction = () => {
+        const {history} = props
+        Cookies.remove('jwt_token')
+        history.replace('/')
       }
 
       return (
@@ -45,7 +53,45 @@ const Header = () => (
                 src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png "
                 alt="profile"
               />
-              <button type="button">Logout</button>
+              <div>
+                <div className="popup-container">
+                  <Popup
+                    modal
+                    trigger={
+                      <button type="button" className="trigger-button">
+                        Logout
+                      </button>
+                    }
+                  >
+                    {close => (
+                      <div className="closeBar">
+                        <div>
+                          <p>
+                            React is a popular and widely used programming
+                            language
+                          </p>
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            className="trigger-button"
+                            onClick={() => close()}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            className="trigger-button"
+                            onClick={() => logoutFunction()}
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </Popup>
+                </div>
+              </div>
             </li>
           </ul>
         </CusDiv>
@@ -54,4 +100,4 @@ const Header = () => (
   </MainContainer.Consumer>
 )
 
-export default Header
+export default withRouter(Header)

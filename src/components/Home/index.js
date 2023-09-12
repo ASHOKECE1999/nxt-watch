@@ -6,9 +6,10 @@ import Card from '../Card/index'
 import SideView from '../SideView'
 import Header from '../Header'
 import './index.css'
+import FailureView from '../FailureView'
 
 class Home extends Component {
-  state = {searchInput: '', dataArray: []}
+  state = {searchInput: '', dataArray: [], isSuccess: true}
 
   componentDidMount() {
     this.getData()
@@ -27,19 +28,24 @@ class Home extends Component {
       `https://apis.ccbp.in/videos/all?search=${searchInput}`,
       options,
     )
-    const response = await data.json()
-    const video = response.videos
-    const dataDisplay = video.map(eachItem => ({
-      id: eachItem.id,
-      publishedAt: eachItem.published_at,
-      thumbnailUrl: eachItem.thumbnail_url,
-      title: eachItem.title,
-      viewCount: eachItem.view_count,
-      channelName: eachItem.channel.name,
-      profileImageUrl: eachItem.channel.profile_image_url,
-    }))
-    console.log(dataDisplay)
-    this.setState({dataArray: dataDisplay})
+    if (data.ok) {
+      const response = await data.json()
+      const video = response.videos
+      const dataDisplay = video.map(eachItem => ({
+        id: eachItem.id,
+        publishedAt: eachItem.published_at,
+        thumbnailUrl: eachItem.thumbnail_url,
+        title: eachItem.title,
+        viewCount: eachItem.view_count,
+        channelName: eachItem.channel.name,
+        profileImageUrl: eachItem.channel.profile_image_url,
+      }))
+      console.log(dataDisplay)
+      this.setState({dataArray: dataDisplay, isSuccess: true})
+    }
+    if (data.ok === false) {
+      this.setState({isSuccess: false})
+    }
   }
 
   getInfoOfUser = event => {
@@ -50,39 +56,64 @@ class Home extends Component {
     this.getData()
   }
 
+  recallApi = () => {
+    this.getData()
+  }
+
   render() {
-    const {dataArray} = this.state
+    const {dataArray, isSuccess} = this.state
     return (
       <div className="homeContainer">
         <Header />
         <div className="SecondCon">
           <SideView />
           <div className="sec">
-            <div className="cardInitial">
+            {isSuccess ? (
               <div>
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                  alt="nxt watch logo"
-                />
-                <button type="button">Close</button>
+                <div className="cardInitial">
+                  <div>
+                    <img
+                      src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                      alt="nxt watch logo"
+                    />
+                    <button type="button">Close</button>
+                  </div>
+                  <div>
+                    <p>Buy Nxt Watch Premium</p>
+                    <h1>UPI</h1>
+                    <button type="button">GET IT NOW</button>
+                  </div>
+                </div>
+                <div>
+                  <input
+                    type="search"
+                    width={300}
+                    onChange={this.getInfoOfUser}
+                  />
+                  <button type="button" onClick={this.getBasedOnRequirement}>
+                    <AiOutlineSearch />
+                  </button>
+                </div>
+                {dataArray.length > 0 ? (
+                  <ul className="orderList">
+                    {dataArray.map(eachItem => (
+                      <Card eachItem={eachItem} id={eachItem.id} />
+                    ))}
+                  </ul>
+                ) : (
+                  <div>
+                    <img
+                      src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+                      alt="no videos"
+                    />
+                    <h1>No Search results found</h1>
+                    <p>Try different key words or remove search filter</p>
+                  </div>
+                )}
               </div>
-              <div>
-                <p>Buy Nxt Watch Premium</p>
-                <h1>UPI</h1>
-                <button type="button">GET IT NOW</button>
-              </div>
-            </div>
-            <div>
-              <input type="search" width={300} onChange={this.getInfoOfUser} />
-              <button type="button" onClick={this.getBasedOnRequirement}>
-                <AiOutlineSearch />
-              </button>
-            </div>
-            <ul className="orderList">
-              {dataArray.map(eachItem => (
-                <Card eachItem={eachItem} id={eachItem.id} />
-              ))}
-            </ul>
+            ) : (
+              <FailureView recallApi={this.recallApi} />
+            )}
           </div>
         </div>
       </div>

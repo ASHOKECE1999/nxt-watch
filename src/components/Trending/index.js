@@ -4,9 +4,10 @@ import './index.css'
 import Header from '../Header'
 import SideView from '../SideView'
 import Card from '../Card'
+import FailureView from '../FailureView'
 
 class Trending extends Component {
-  state = {dataArray: []}
+  state = {dataArray: [], isSuccess: true}
 
   componentDidMount() {
     this.getData()
@@ -24,21 +25,34 @@ class Trending extends Component {
       'https://apis.ccbp.in/videos/trending',
       options,
     )
-    const data = await response.json()
-    const video = data.videos
-    const dataDisplay = video.map(eachItem => ({
-      id: eachItem.id,
-      thumbnailUrl: eachItem.thumbnail_url,
-      title: eachItem.title,
-      viewCount: eachItem.view_count,
-    }))
 
-    this.setState({dataArray: dataDisplay})
-    console.log(dataDisplay)
+    if (response.ok) {
+      const data = await response.json()
+      const video = data.videos
+      const dataDisplay = video.map(eachItem => ({
+        id: eachItem.id,
+        thumbnailUrl: eachItem.thumbnail_url,
+        title: eachItem.title,
+        viewCount: eachItem.view_count,
+        channelName: eachItem.channel.name,
+        profileImageUrl: eachItem.channel.profile_img_url,
+        publishedAt: eachItem.published_at,
+      }))
+
+      this.setState({dataArray: dataDisplay, isSuccess: true})
+      console.log(dataDisplay)
+    }
+    if (response.ok === false) {
+      this.setState({isSuccess: false})
+    }
+  }
+
+  recallApi = () => {
+    this.getData()
   }
 
   render() {
-    const {dataArray} = this.state
+    const {dataArray, isSuccess} = this.state
     return (
       <div>
         <Header />
@@ -46,13 +60,17 @@ class Trending extends Component {
           <SideView />
           <div>
             <h1>Trending</h1>
-            <div
-              style={{display: 'flex', flexWrap: 'wrap', overflowY: 'scroll'}}
-            >
-              {dataArray.map(eachItem => (
-                <Card eachItem={eachItem} key={eachItem.id} />
-              ))}
-            </div>
+            {isSuccess ? (
+              <div
+                style={{display: 'flex', flexWrap: 'wrap', overflowY: 'scroll'}}
+              >
+                {dataArray.map(eachItem => (
+                  <Card eachItem={eachItem} key={eachItem.id} />
+                ))}
+              </div>
+            ) : (
+              <FailureView recallApi={this.recallApi} />
+            )}
           </div>
         </div>
       </div>

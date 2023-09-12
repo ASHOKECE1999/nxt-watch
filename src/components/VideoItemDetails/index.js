@@ -5,9 +5,10 @@ import SideView from '../SideView'
 import Header from '../Header'
 import './index.css'
 import MainContainer from '../../context/MainContainer'
+import FailureView from '../FailureView'
 
 class VideoItemDetails extends Component {
-  state = {displayObject: {}}
+  state = {displayObject: {}, isSuccess: true}
 
   componentDidMount() {
     this.getData()
@@ -25,26 +26,31 @@ class VideoItemDetails extends Component {
       method: 'GET',
     }
     const data = await fetch(`https://apis.ccbp.in/videos/${id}`, options)
-    const response = await data.json()
-    const eachItem = response.video_details
-    const dataDisplay = {
-      id: eachItem.id,
-      publishedAt: eachItem.published_at,
-      thumbnailUrl: eachItem.thumbnail_url,
-      title: eachItem.title,
-      viewCount: eachItem.view_count,
-      channelName: eachItem.channel.name,
-      profileImageUrl: eachItem.channel.profile_image_url,
-      videoUrl: eachItem.video_url,
-      subscriberCount: eachItem.channel.subscriber_count,
-      description: eachItem.description,
+    if (data.ok) {
+      const response = await data.json()
+      const eachItem = response.video_details
+      const dataDisplay = {
+        id: eachItem.id,
+        publishedAt: eachItem.published_at,
+        thumbnailUrl: eachItem.thumbnail_url,
+        title: eachItem.title,
+        viewCount: eachItem.view_count,
+        channelName: eachItem.channel.name,
+        profileImageUrl: eachItem.channel.profile_image_url,
+        videoUrl: eachItem.video_url,
+        subscriberCount: eachItem.channel.subscriber_count,
+        description: eachItem.description,
+      }
+      console.log(dataDisplay)
+      this.setState({displayObject: dataDisplay, isSuccess: true})
     }
-    console.log(dataDisplay)
-    this.setState({displayObject: dataDisplay})
+    if (data.ok === false) {
+      this.setState({isSuccess: false})
+    }
   }
 
-  sendData = () => {
-    const {displayObject} = this.state
+  recallApi = () => {
+    this.getData()
   }
 
   displaySuccess = () => (
@@ -113,12 +119,23 @@ class VideoItemDetails extends Component {
   )
 
   render() {
+    const {isSuccess} = this.state
     return (
       <div>
         <Header />
         <div style={{display: 'flex'}}>
           <SideView />
-          <div>{this.displaySuccess()}</div>
+          {isSuccess ? (
+            <div>{this.displaySuccess()}</div>
+          ) : (
+            <div>
+              <FailureView recallApi={this.recallApi} />
+              <p>
+                We are having some trouble to complete your request. Please try
+                again.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     )
